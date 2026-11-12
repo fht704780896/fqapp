@@ -239,7 +239,9 @@ class SettingsPage extends StatelessWidget {
                     icon: category.icon,
                     iconTile: true,
                     title: category.title,
-                    subtitle: category.subtitle,
+                    subtitle: category.title == '主题'
+                        ? AppThemeStyleStore.instance.value.label
+                        : category.subtitle,
                     onTap: () => _openCategory(context, category),
                   ),
               ],
@@ -266,8 +268,11 @@ class SettingsPage extends StatelessWidget {
                   title: categories[index].title,
                   subtitle: categories[index].subtitle,
                   icon: categories[index].icon,
-                  trailing: categories[index].title == '主题'
-                      ? Text(AppThemeStyleStore.instance.value.label)
+                  // The current theme is a value, not a control: it belongs
+                  // next to the chevron, and the chevron has to land in the
+                  // same place as every other row's.
+                  trailingText: categories[index].title == '主题'
+                      ? AppThemeStyleStore.instance.value.label
                       : null,
                   onTap: () => _openCategory(context, categories[index]),
                 ),
